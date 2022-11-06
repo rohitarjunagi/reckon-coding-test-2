@@ -22,9 +22,15 @@ Run production build with a different env file.
 
 ## API
 
-POST API is available at http://localhost:9999/submitResults. This end point will call the required API end points to get the text to search and subtexts and will post the results to the submit result endpoint and will return the result of the reckon post api endpoint
+POST API is available at http://localhost:9999/api/generateResults. This end point will call the required API end points to get the text to search and subtexts and will post the results to the submit result endpoint and will return the result of the reckon post api endpoint
 
 ## TODOS
 
 - Test cases
 - Proper type checking/setting/handling
+- Sanitizing and validation of external data inputs
+
+## Assumptions
+
+- The external data coming in is sanitized and are strings
+- The external apis are retried for 5 times if there's an error before finally erroring out
