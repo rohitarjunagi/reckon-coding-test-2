@@ -16,15 +16,14 @@ async function generateResult() {
     text: textToSearch,
     result: subTextsPosition,
   };
-  console.log("formattedResult", formattedResult);
   return retryPost(submitResultsUrl, formattedResult);
 }
 
 function getSubTextsPositions(textToSearch: string, subTexts: string[]) {
   const subTextPositions = [];
   for (const subText of subTexts) {
-    const result = isSubstring(textToSearch, subText);
-    if (result) {
+    const result: any = isSubstring(textToSearch, subText);
+    if (result.length !== 0) {
       subTextPositions.push({
         subText,
         result: result.join(", "),
@@ -42,7 +41,7 @@ function getSubTextsPositions(textToSearch: string, subTexts: string[]) {
 function isSubstring(textToSearch: string, substring: string) {
   if (substring.length > textToSearch.length) return;
   const startChar = substring[0].toLowerCase();
-  const arr = [];
+  const indexPositions = [];
   for (let searchIndex = 0; searchIndex < textToSearch.length; searchIndex++) {
     if (textToSearch[searchIndex].toLowerCase() === startChar) {
       let fullMatch = true;
@@ -58,10 +57,10 @@ function isSubstring(textToSearch: string, substring: string) {
           continue;
         else fullMatch = false;
       }
-      if (fullMatch) arr.push(searchIndex + 1);
+      if (fullMatch) indexPositions.push(searchIndex + 1);
     }
   }
-  return arr;
+  return indexPositions;
 }
 
 async function retryGet(urls: string[], retries = 0): Promise<any> {
